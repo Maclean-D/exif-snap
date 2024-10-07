@@ -252,7 +252,7 @@ export default function ExifSnap() {
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
-      <h1 className="text-3xl font-bold mb-6">exif-snap</h1>
+      <h1 className="text-3xl font-bold mb-6 font-caveat">exif-snap</h1>
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div className="flex flex-wrap items-center gap-4">
           <div>
@@ -360,7 +360,7 @@ export default function ExifSnap() {
               </div>
             </CardContent>
             <CardFooter className="flex justify-between p-2 items-center">
-              <div className="truncate max-w-[50%]" title={image.name}>
+              <div className="truncate max-w-[50%] font-caveat" title={image.name}>
                 {removeFileExtension(image.name)}
               </div>
               <div className="flex gap-2">

@@ -1,7 +1,21 @@
 import "~/styles/globals.css";
-import { GeistSans } from "geist/font/sans";
+import localFont from 'next/font/local';
+import { Roboto } from 'next/font/google';
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
+
+// Load the Caveat font
+const caveatFont = localFont({
+  src: '../../public/fonts/Caveat-VariableFont_wght.ttf',
+  variable: '--font-caveat',
+});
+
+// Load Roboto font
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-roboto',
+});
 
 export const metadata: Metadata = {
   title: "exif-snap",
@@ -13,8 +27,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`} suppressHydrationWarning>
-      <body>
+    <html lang="en" className={`${caveatFont.variable} ${roboto.variable}`} suppressHydrationWarning>
+      <body className={roboto.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

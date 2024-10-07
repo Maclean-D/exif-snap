@@ -1,29 +1,83 @@
-# Create T3 App
+# exif-snap
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+![exif-snap](https://raw.githubusercontent.com/Maclean-D/pickpair/refs/heads/master/exif-snap.png)
 
-## What's next? How do I make an app with this?
+Web application that allows users to upload, modify, and download images while preserving and editing EXIF metadata.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Features
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- Upload multiple images
+- View and edit image EXIF metadata
+- Rotate images
+- Set custom date and time for all images
+- Download individual images or all images as a zip file
+- Dark mode support
+- Responsive design
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## How to Run
 
-## Learn More
+1. Open a terminal and clone this repository
+   ```
+   git clone https://github.com/Maclean-D/exif-snap.git
+   ```
+   
+2. Navigate to the project directory.
+   ```
+   cd exif-snap
+   ```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+3. Install dependencies:
+   ```
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+4. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```   
+   
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Usage
 
-## How do I deploy this?
+1. **Upload Images**: Click the "Upload Images" button to select and upload one or more images.
+2. **Set Date and Time**: Use the date and time picker to set a custom date and time for all images.
+3. **Rotate Images**: Use the rotate buttons on each image card to rotate the image clockwise or counterclockwise.
+4. **View Metadata**: Click the info button on an image card to view its EXIF metadata.
+5. **Download Images**: Click the download button on an image card to download a single image, or use the "Download All" button to download all images as a zip file.
+6. **Delete Images**: Use the trash can button to remove an image from the list.
+7. **Toggle Dark Mode**: Use the theme toggle button in the top right corner to switch between light and dark modes.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Technologies Used
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Shadcn/ui
+- exifr
+- piexifjs
+- JSZip
+- file-saver
+- date-fns
+- Lucide React
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Maclean-D/exif-snap&type=Date)](https://star-history.com/#Maclean-D/exif-snap&Date)
+
+## Contributors
+
+<a href="https://github.com/Maclean-D/exif-snap/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Maclean-D/exif-snap" />
+</a>
