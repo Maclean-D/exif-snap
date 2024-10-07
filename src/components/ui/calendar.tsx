@@ -15,6 +15,7 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}

@@ -14,24 +14,31 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import exifr from 'exifr'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
-import { piexif } from 'piexifjs'
+import piexif from 'piexifjs'
 import { Buffer } from 'buffer'
 import { X } from "lucide-react"
 import { ThemeToggle } from "~/components/ThemeToggle"
+import Image from 'next/image'
+
+type ExifObj = {
+  '0th'?: Record<number, string | number[]>;
+  'Exif'?: Record<number, string | number[]>;
+  'GPS'?: Record<number, string | number[]>;
+};
 
 type ImageData = {
   id: string
   src: string
   rotation: number
   name: string
-  metadata: Record<string, any>
+  metadata: Record<string, unknown>
 }
 
 const rotateImageAndPreserveExif = async (imageData: string, rotation: number): Promise<string> => {
-  const exifObj = piexif.load(imageData)
+  const exifObj = piexif.load(imageData) as ExifObj;
   
   // Create a new image with the rotation applied
-  const img = new Image()
+  const img = new window.Image()
   await new Promise((resolve) => {
     img.onload = resolve
     img.src = imageData
@@ -60,7 +67,7 @@ const rotateImageAndPreserveExif = async (imageData: string, rotation: number): 
 }
 
 const updateExifDateTime = (imageData: string, newDateTime: Date): string => {
-  const exifObj = piexif.load(imageData)
+  const exifObj = piexif.load(imageData) as ExifObj;
   const newDateTimeString = format(newDateTime, "yyyy:MM:dd HH:mm:ss")
   
   // Update all relevant date/time fields
@@ -68,35 +75,35 @@ const updateExifDateTime = (imageData: string, newDateTime: Date): string => {
     exifObj['0th'][piexif.ImageIFD.DateTime] = newDateTimeString
   }
   
-  if (exifObj['Exif']) {
+  if (exifObj.Exif) {
     if (piexif.ExifIFD.DateTimeOriginal !== undefined) {
-      exifObj['Exif'][piexif.ExifIFD.DateTimeOriginal] = newDateTimeString
+      exifObj.Exif[piexif.ExifIFD.DateTimeOriginal] = newDateTimeString
     }
     if (piexif.ExifIFD.DateTimeDigitized !== undefined) {
-      exifObj['Exif'][piexif.ExifIFD.DateTimeDigitized] = newDateTimeString
+      exifObj.Exif[piexif.ExifIFD.DateTimeDigitized] = newDateTimeString
     }
     // Update SubSecTime fields if they exist
     if (piexif.ExifIFD.SubSecTime !== undefined) {
-      exifObj['Exif'][piexif.ExifIFD.SubSecTime] = "00"
+      exifObj.Exif[piexif.ExifIFD.SubSecTime] = "00"
     }
     if (piexif.ExifIFD.SubSecTimeOriginal !== undefined) {
-      exifObj['Exif'][piexif.ExifIFD.SubSecTimeOriginal] = "00"
+      exifObj.Exif[piexif.ExifIFD.SubSecTimeOriginal] = "00"
     }
     if (piexif.ExifIFD.SubSecTimeDigitized !== undefined) {
-      exifObj['Exif'][piexif.ExifIFD.SubSecTimeDigitized] = "00"
+      exifObj.Exif[piexif.ExifIFD.SubSecTimeDigitized] = "00"
     }
   }
   
   // Update GPS date/time if it exists
-  if (exifObj['GPS']) {
+  if (exifObj.GPS) {
     if (piexif.GPSIFD.GPSDateStamp !== undefined) {
-      exifObj['GPS'][piexif.GPSIFD.GPSDateStamp] = format(newDateTime, "yyyy:MM:dd")
+      exifObj.GPS[piexif.GPSIFD.GPSDateStamp] = format(newDateTime, "yyyy:MM:dd")
     }
     if (piexif.GPSIFD.GPSTimeStamp !== undefined) {
       const hours = newDateTime.getUTCHours()
       const minutes = newDateTime.getUTCMinutes()
       const seconds = newDateTime.getUTCSeconds()
-      exifObj['GPS'][piexif.GPSIFD.GPSTimeStamp] = [[hours, 1], [minutes, 1], [seconds, 1]]
+      exifObj.GPS[piexif.GPSIFD.GPSTimeStamp] = [[hours, 1], [minutes, 1], [seconds, 1]] as unknown as number[]
     }
   }
   
@@ -146,10 +153,10 @@ export default function ExifSnap() {
       for (const file of Array.from(files)) {
         const reader = new FileReader()
         reader.onload = async (e) => {
-          const img = new Image()
+          const img = new window.Image()
           img.onload = async () => {
             try {
-              const metadata = await exifr.parse(file)
+              const metadata = await exifr.parse(file) as Record<string, unknown>;
               const newImage: ImageData = {
                 id: Math.random().toString(36).substr(2, 9),
                 src: e.target?.result as string,
@@ -179,7 +186,7 @@ export default function ExifSnap() {
   }
 
   // Add this helper function to check if flash was used
-  const flashWasUsed = (metadata: Record<string, any>) => {
+  const flashWasUsed = (metadata: Record<string, unknown>) => {
     const flashValue = metadata.Flash;
     return typeof flashValue === 'string' && flashValue.toLowerCase().includes('fired');
   }
@@ -316,10 +323,11 @@ export default function ExifSnap() {
           <Card key={image.id} className="overflow-hidden group">
             <CardContent className="p-0">
               <div className="relative pt-[100%]">
-                <img
+                <Image
                   src={image.src}
                   alt={image.name}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  layout="fill"
+                  objectFit="cover"
                   style={{
                     transform: `rotate(${image.rotation}deg)`,
                     transition: "transform 0.3s ease",
@@ -342,10 +350,11 @@ export default function ExifSnap() {
                   </DialogTrigger>
                   <DialogContent className="max-w-[90vw] max-h-[90vh] w-[90vw] h-[90vw] sm:w-[80vw] sm:h-[80vw] md:w-[70vw] md:h-[70vw] lg:w-[60vw] lg:h-[60vw] xl:w-[50vw] xl:h-[50vw] p-8">
                     <div className="relative w-full h-full flex items-center justify-center bg-black/10 rounded-lg overflow-hidden">
-                      <img
+                      <Image
                         src={image.src}
                         alt={image.name}
-                        className="max-w-full max-h-full object-contain"
+                        layout="fill"
+                        objectFit="contain"
                         style={{
                           transform: `rotate(${image.rotation}deg)`,
                         }}
