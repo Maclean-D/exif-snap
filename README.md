@@ -2,8 +2,7 @@
 
 ![exif-snap](https://raw.githubusercontent.com/Maclean-D/pickpair/refs/heads/master/exif-snap.png)
 
-Web application that allows users to upload, modify, and download images while preserving and editing EXIF metadata.
-Works great for Camp Snap cameras which don't save the date/time or orientation of the camera.
+Web application to rotate and change the date of a lot of images at once. Works great for Camp Snap cameras which don't save the date/time or orientation of the camera.
 
 ## Features
 
