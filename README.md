@@ -1,6 +1,6 @@
 # exif-snap
 
-![exif-snap](https://raw.githubusercontent.com/Maclean-D/pickpair/refs/heads/master/exif-snap.png)
+![exif-snap](https://raw.githubusercontent.com/Maclean-D/exif-snap/refs/heads/main/exif-snap.png)
 
 Web application to rotate and change the date of images in bulk. Works great for Camp Snap cameras that don't save date/time or orientation of the camera.
 
