@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import { Roboto } from 'next/font/google';
 import { type Metadata } from "next";
 import { ThemeProvider } from "~/components/theme-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 // Load the Caveat font
 const caveatFont = localFont({
@@ -36,6 +37,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
